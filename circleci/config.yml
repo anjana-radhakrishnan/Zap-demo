@@ -1,0 +1,12 @@
+jobs:
+  scan:
+    docker:
+      - image: owasp/zap2docker-stable
+    steps:
+      - run:
+            command: |
+              mkdir /zap/wrk
+              zap-api-scan.py -f openapi -t https://target-url/swagger.json -r report.html
+      - store_artifacts:
+          path: /zap/wrk
+          destination: zap-report
